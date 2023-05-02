@@ -1,0 +1,15 @@
+.header__menu,
+.header__menu span {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header__menu span {
+    cursor: pointer;
+}
+
+.header__menu svg:hover {
+    fill: orange;
+}
