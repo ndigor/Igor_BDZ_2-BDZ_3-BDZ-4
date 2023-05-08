@@ -1,5 +1,5 @@
 import React from 'react';
-import svg from './svg.svg';
+import svg from './404.svg';
 import './404.css';
 
 const 404 = (props) => {
