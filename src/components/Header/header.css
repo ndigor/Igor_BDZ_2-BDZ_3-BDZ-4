@@ -10,3 +10,14 @@
     justify-content: space-between;
     gap: 80px;
 }
+
+.header__logo {
+    display: flex;
+    align-items: flex-start;
+}
+
+@media (max-width: 776px) {
+    .header__wrapper {
+        gap: 30px;
+    }
+}
