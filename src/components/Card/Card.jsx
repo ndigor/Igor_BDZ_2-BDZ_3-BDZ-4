@@ -1,7 +1,7 @@
 import React from 'react';
 import './card.css';
 import { ReactComponent as Like } from './img/Like.svg';
-import { editLike } from '../../utils/api';
+import { Link } from 'react-router-dom';
 
 const Card = ({ product, userId, changeLikeCard }) => {
     const cardLiked = product.likes.some((item) => item === userId);
@@ -37,7 +37,7 @@ const Card = ({ product, userId, changeLikeCard }) => {
                     <Like />
                 </button>
             </div>
-            <a href="/" className="card__link">
+            <Link to={`/product/${product._id}`} className="card__link">
                 <div className="card__image_wrapper">
                     <img
                         className="card__image"
@@ -50,7 +50,7 @@ const Card = ({ product, userId, changeLikeCard }) => {
                     <span className="card__weight">{product.wight}</span>
                     <p className="card__text">{product.name}</p>
                 </div>
-            </a>
+            </Link>
             <button className="card__btn btn_color">В Корзину</button>
         </div>
     );
