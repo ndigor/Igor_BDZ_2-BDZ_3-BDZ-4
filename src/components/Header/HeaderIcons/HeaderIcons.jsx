@@ -1,28 +1,32 @@
 import React from 'react';
 import './headersIcons.css';
-// import { ReactComponent as Dog } from './icons/DogIcon.svg';
-// import { ReactComponent as Heart } from './icons/Favorites.svg';
-// import { ReactComponent as Cart } from './icons/ic-cart.svg';
-import {
-    BalloonHeart,
-    BalloonHeartFill,
-    BagHeart,
-    BagHeartFill,
-    PersonCircle,
-    BuildingUp,
-    BuildingDown,
-} from 'react-bootstrap-icons';
+ import { ReactComponent as Dog } from './icons/DogIcon.svg';
+ import { ReactComponent as Heart } from './icons/Favorites.svg';
+ import { ReactComponent as Cart } from './icons/ic-cart.svg';
+import { Link } from 'react-router-dom';
+const HeaderIcons = (props) => {
+    return (
+        <div className="header__icons">
+            <div>
+                <Link to={'/favorite'}>
+                    <Heart />
+                </Link>
+            </div>
+            <div>
+                <Link>
+                    <Cart />
+                </Link>
+            </div>
+            <div>
+                <Link>
+                    <Dog />
+                </Link>
+            </div>
+        </div>
+    );
+};
 
-const HeaderIcons = ({ user, upd }) => {
-    const login = () => {
-        localStorage.setItem('user12', 'Vasya');
-        upd('Vasya');
-    };
-
-    const logout = () => {
-        localStorage.removeItem('user12');
-        upd('');
-    };
+export default HeaderIcons;
     return (
         <nav className="header__menu">
             {user ? (
