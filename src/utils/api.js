@@ -17,6 +17,7 @@ class Api {
         this.headers = data.headers;
     }
 
+    /*Получение списка всех позиций*/
     getAllProducts() {
         return fetch(`${this.baseUrl}/products`, {
             method: 'GET',
@@ -24,35 +25,41 @@ class Api {
         }).then(onResponse);
     }
 
+    /*Получение информации о пользователе*/
     getUserInfo() {
         return fetch(`${this.baseUrl}/users/me`, {
             method: 'GET',
             headers: this.headers,
         }).then(onResponse);
     }
-
+    
+    /*Реализация поиска*/
     searchProducts(path) {
         return fetch(`${this.baseUrl}/products/search?query=${path}`, {
             headers: this.headers,
         }).then(onResponse);
     }
+    
+    
+    /*Добавление установки  лайка на позицию*/
     // addLike(id) {
-    //     return fetch(`${this.baseUrl}/products/likes/${id}`, {
-    //         method: 'PUT',
-    //         headers: this.headers,
-    //     }).then(onResponse);
-    // }
-
-    // removeLike(id) {
-    //     return fetch(`${this.baseUrl}/products/likes/${id}`, {
-    //         method: 'DELETE',
-    //         headers: this.headers,
-    //     }).then(onResponse);
-    // }
+    //   return fetch(`${this.baseUrl}/products/likes/${id}`, {
+    //       method: 'PUT',
+    //       headers: this.headers,
+    //  }).then(onResponse);
+    //}
+    
+    /*Удаление лайка по ID*/
+   //  removeLike(id) {
+   //     return fetch(`${this.baseUrl}/products/likes/${id}`, {
+   //        method: 'DELETE',
+   //        headers: this.headers,
+   //    }).then(onResponse);
+   //  }
 }
 
+/*Реализация метода добавления лайка, если позиция не лайкнута, и снятия лайка, если на ней стоит лайк*/
 export const api = new Api(config);
-
 export const editLikeCard = (id, cardLiked) => {
     return fetch(`${config.baseUrl}/products/likes/${id}`, {
         method: cardLiked ? 'DELETE' : 'PUT',
