@@ -1,6 +1,6 @@
 import React from 'react';
 import svg from './404.svg';
-import './404.css';
+import './NotFound.css';
 
 const 404 = (props) => {
     return (
