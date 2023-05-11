@@ -10,7 +10,7 @@ import NotFoundPage from './pages/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
 import RouterAuth from './route/RouterAuth/RouterAuth';
-import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
+import NotFoundProductPage from './NotFound/NotFound.jsx';
 
 function App() {
     const [card, setCards] = useState([]);
