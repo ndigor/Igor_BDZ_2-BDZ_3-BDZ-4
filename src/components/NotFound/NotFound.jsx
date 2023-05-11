@@ -2,24 +2,24 @@ import React from 'react';
 import svg from './404.svg';
 import './NotFound.css';
 
-const 404 = (props) => {
+const NotFound = (props) => {
     return (
         <>
             <div className="container">
-                <div className="404__wrapper">
+                <div className="NotFound__wrapper">
                     <img
-                        className="404__img"
+                        className="NotFound__img"
                         src={svg}
                         alt="sad smile"
                     />
-                    <h2 className="404__title">
+                    <h2 className="NotFound__title">
                         Извините, данная страничка сломалась либо больше не существует.
                     </h2>
-                    <button className="404__btn">На главную</button>
+                    <button className="NotFound__btn">На главную</button>
                 </div>
             </div>
         </>
     );
 };
 
-export default 404;
+export default NotFound;
