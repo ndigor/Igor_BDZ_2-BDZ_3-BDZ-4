@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Header } from './components/Header/Header';
+import { Header } from './components/Header/HeaderIcons/HeaderIcons';
 import { Footer } from './components/Footer/Footer';
 import { CardList } from './components/CardList/CardList.jsx';
 import { api, editLikeCard } from './utils/api';
