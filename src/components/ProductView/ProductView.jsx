@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './productView.css';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getOneProduct } from '../../utils/api';
 import GoBack from '../GoBack/GoBack';
 

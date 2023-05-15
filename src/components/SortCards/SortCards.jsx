@@ -7,7 +7,7 @@ const SortCards = ({ onSort }) => {
         { id: 'popular', title: 'Популярные' },
         { id: 'new', title: 'Новинки' },
         { id: 'lowPrice', title: 'Сначала дешёвые' },
-        { id: 'highPrice', title: 'Сначала дорогие' }.
+        { id: 'highPrice', title: 'Сначала дорогие' },
         { id: 'sale', title: 'По скидке' },
     ];
     return (

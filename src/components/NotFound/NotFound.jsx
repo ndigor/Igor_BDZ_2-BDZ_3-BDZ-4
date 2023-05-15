@@ -1,5 +1,5 @@
 import React from 'react';
-import svg from './404.svg';
+import svg from './NotFound.svg';
 import './NotFound.css';
 
 const NotFound = (props) => {

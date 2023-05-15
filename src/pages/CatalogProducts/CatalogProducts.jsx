@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CardList } from '../../components/CardList/CardList';
 import './catalogProduct.css';
-import { Link, NavLink, Navigate } from 'react-router-dom';
+import {  Navigate } from 'react-router-dom';
 import SortCards from '../../components/SortCards/SortCards';
+import { CardContext } from '../../context/cardContext';
 
-const CatalogProducts = ({ cards, user, changeLikeCard, search, onSort }) => {
+const CatalogProducts = () => {
+    const { cards, user, changeLikeCard, search, onSort }=useContext(CardContext);
     const getEndings = (num) => {
         const res = num % 10;
         if (res === 1) {

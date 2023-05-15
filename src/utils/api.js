@@ -1,9 +1,9 @@
 const config = {
     baseUrl: 'https://api.react-learning.ru',
     headers: {
-        'Content-Type': 'application/json',
         authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQ2YjE1ZThmYmM0NzNmYTg5Y2U1NzYiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgyMzU4NjE5LCJleHAiOjE3MTM4OTQ2MTl9.79zquAglgG_3kM45B1yt1aDx_WOc1Tm1oIzzQeNmg6o',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQ2YjE1ZThmYmM0NzNmYTg5Y2U1NzYiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgyMzU4NjE5LCJleHAiOjE3MTM4OTQ2MTl9.79zquAglgG_3kM45B1yt1aDx_WOc1Tm1oIzzQeNmg6o',
+        'Content-Type': 'application/json',
     },
 };
 
@@ -73,12 +73,12 @@ export const editLikeCard = (id, cardLiked) => {
 //         headers: config.headers,
 //     }).then(onResponse);
 // };
-// export const getOneProduct = (id) => {
-//     return fetch(`${config.baseUrl}/products/${id}`, {
-//         method: 'GET',
-//         headers: config.headers,
-//     }).then(onResponse);
-// };
+export const getOneProduct = (id) => {
+    return fetch(`${config.baseUrl}/products/${id}`, {
+        method: 'GET',
+        headers: config.headers,
+    }).then(onResponse);
+};
 
 // export const addReview = (id, reviewId) => {
 //     return fetch(`${config.baseUrl}/products/review/${id}/${reviewId}`, {

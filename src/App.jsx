@@ -2,24 +2,22 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
-import { CardList } from './components/CardList/CardList.jsx';
 import { api, editLikeCard } from './utils/api';
 import { CardContext } from './context/cardContext';
 import { Route, Routes } from 'react-router-dom';
 import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
-import PageProduct from './pages/PageProduct/PageProduct';
-import NotFoundPage from './pages/NotFound';
+import {NotFoundPage} from './pages/NotFoundPage/NotFoundPage';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
-import RouterAuth from './route/RouterAuth/RouterAuth';
-import NotFoundProductPage from './NotFound/NotFound.jsx';
+import ProductView from './components/ProductView/ProductView';
+
 
 function App() {
-    const [card, setCards] = useState([]);
+    const [cards, setCards] = useState([]);
     const [search, setSearch] = useState(undefined);
     const [user, setUser] = useState({});
 
-    const filterCards = (card) => {
-        return card.filter(
+    const filterCards = (cards) => {
+        return cards.filter(
             (item) => item.author._id === '622bd81b06c7d323b8ae4614'
         );
     };
@@ -27,7 +25,7 @@ function App() {
     const changeLikeCard = async (product, cardLiked) => {
         const updateLikeInCard = await editLikeCard(product, cardLiked);
 
-        const newCard = card.map((item) =>
+        const newCard = cards.map((item) =>
             item._id === updateLikeInCard._id ? updateLikeInCard : item
         );
         setCards([...newCard]);
@@ -47,6 +45,10 @@ function App() {
         // cardLiked ? deleteUpdatedCard() : addUpdatedCard();
     };
 
+
+
+
+
     useEffect(() => {
         if (search === undefined) return;
         api.searchProducts(search).then((data) => setCards(filterCards(data)));
@@ -58,9 +60,9 @@ function App() {
     }, []);
 
 const cardsValue={
+    cards, user, changeLikeCard, 
     search,
-    user,
-    card,
+
 }
 
     return (
@@ -69,7 +71,7 @@ const cardsValue={
             <Header setSearch={setSearch}></Header>
             <Routes>
                 <Route path='/' element={<CatalogProducts />}/>
-                <Route path='/product/:id' element={<PageProduct/>} />
+                <Route path='/product/:id' element={<ProductView/>} />
                 <Route path='/favorites' element={<FavoritePage />} />
                 <Route path='*' element={<NotFoundPage />} />
             </Routes>
