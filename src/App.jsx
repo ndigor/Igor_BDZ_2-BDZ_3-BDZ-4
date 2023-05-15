@@ -5,13 +5,13 @@ import { Footer } from './components/Footer/Footer';
 import { CardList } from './components/CardList/CardList.jsx';
 import { api, editLikeCard } from './utils/api';
 import { CardContext } from './context/cardContext';
-// import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
-// import PageProduct from './pages/PageProduct/PageProduct';
-// import NotFoundPage from './pages/NotFound';
-// import { Route, Routes } from 'react-router-dom';
-// import FavoritePage from './pages/FavoritePage/FavoritePage';
-// import RouterAuth from './route/RouterAuth/RouterAuth';
-// import NotFoundProductPage from './NotFound/NotFound.jsx';
+import { Route, Routes } from 'react-router-dom';
+import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
+import PageProduct from './pages/PageProduct/PageProduct';
+import NotFoundPage from './pages/NotFound';
+import FavoritePage from './pages/FavoritePage/FavoritePage';
+import RouterAuth from './route/RouterAuth/RouterAuth';
+import NotFoundProductPage from './NotFound/NotFound.jsx';
 
 function App() {
     const [card, setCards] = useState([]);
@@ -67,15 +67,12 @@ const cardsValue={
         <div className="App">
             <CardContext.Provider value={cardsValue}>
             <Header setSearch={setSearch}></Header>
-            <main>
-                <div className="container">
-                    <CardList
-                        cards={card}
-                        userId={user._id}
-                        changeLikeCard={changeLikeCard}
-                    />
-                </div>
-            </main>
+            <Routes>
+                <Route path='/' element={<CatalogProducts />}/>
+                <Route path='/product/:id' element={<PageProduct/>} />
+                <Route path='/favorites' element={<FavoritePage />} />
+                <Route path='*' element={<NotFoundPage />} />
+            </Routes>
             <Footer />
             </CardContext.Provider>
         </div>
