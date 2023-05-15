@@ -2,15 +2,15 @@ import React from 'react';
 import './header.css';
 import Logo from '../Logo/Logo';
 import Search from './Search/Search';
-import HeaderIcons from './HeaderIcons/HeaderIcons';
-import { Link, useLocation } from 'react-router-dom';
+import {HeaderIcons} from './HeaderIcons/HeaderIcons';
+import { Link } from 'react-router-dom';
 
 export const Header = (props) => {
     const setSearchQuery = (path) => {
         props.setSearch(path);
     };
 
-    const location = useLocation();
+    // const location = useLocation();
 
     return (
         <header className="header">
@@ -21,12 +21,7 @@ export const Header = (props) => {
                             <Logo />
                         </div>
                     </Link>
-                    {location.pathname === '/' ||
-                    location.pathname === '/notfoundProduct' ? (
-                        <Search setSearch={setSearchQuery} />
-                    ) : (
-                        ''
-                    )}
+                       <Search setSearch={setSearchQuery} />
                     <HeaderIcons />
                 </div>
             </div>

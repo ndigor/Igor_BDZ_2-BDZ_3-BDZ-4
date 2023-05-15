@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Header } from './components/Header/HeaderIcons/HeaderIcons';
+import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import { CardList } from './components/CardList/CardList.jsx';
 import { api, editLikeCard } from './utils/api';
+import { CardContext } from './context/cardContext';
 // import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
 // import PageProduct from './pages/PageProduct/PageProduct';
 // import NotFoundPage from './pages/NotFound';
@@ -56,8 +57,15 @@ function App() {
         api.getUserInfo().then((data) => setUser(data));
     }, []);
 
+const cardsValue={
+    search,
+    user,
+    card,
+}
+
     return (
         <div className="App">
+            <CardContext.Provider value={cardsValue}>
             <Header setSearch={setSearch}></Header>
             <main>
                 <div className="container">
@@ -69,6 +77,7 @@ function App() {
                 </div>
             </main>
             <Footer />
+            </CardContext.Provider>
         </div>
     );
 }

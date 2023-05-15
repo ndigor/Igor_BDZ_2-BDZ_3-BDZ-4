@@ -4,7 +4,8 @@ import './headersIcons.css';
  import { ReactComponent as Heart } from './icons/Favorites.svg';
  import { ReactComponent as Cart } from './icons/ic-cart.svg';
 import { Link } from 'react-router-dom';
-const HeaderIcons = (props) => {
+
+export const HeaderIcons = (props) => {
     return (
         <div className="header__icons">
             <div>
@@ -26,30 +27,28 @@ const HeaderIcons = (props) => {
     );
 };
 
-export default HeaderIcons;
-    return (
-        <nav className="header__menu">
-            {user ? (
-                <>
-                    <a href="/">
-                        <BalloonHeart title="Избранное" />
-                    </a>
-                    <a href="/">
-                        <BagHeart title="Корзина" />
-                    </a>
-                    <a href="/">
-                        <PersonCircle title="Личный кабинет" />
-                    </a>
-                </>
-            ) : (
-                ''
-            )}
-            <span>
-                {!user ? <BuildingUp title="Вход" onClick={login} /> : ''}
-                {user ? <BuildingDown title="Выход" onClick={logout} /> : ''}
-            </span>
-        </nav>
-    );
-};
 
-export default HeaderIcons;
+//     return (
+//         <nav className="header__menu">
+//             {user ? (
+//                 <>
+//                     <a href="/">
+//                         <BalloonHeart title="Избранное" />
+//                     </a>
+//                     <a href="/">
+//                         <BagHeart title="Корзина" />
+//                     </a>
+//                     <a href="/">
+//                         <PersonCircle title="Личный кабинет" />
+//                     </a>
+//                 </>
+//             ) : (
+//                 ''
+//             )}
+//             <span>
+//                 {!user ? <BuildingUp title="Вход" onClick={login} /> : ''}
+//                 {user ? <BuildingDown title="Выход" onClick={logout} /> : ''}
+//             </span>
+//         </nav>
+//     );
+// };
