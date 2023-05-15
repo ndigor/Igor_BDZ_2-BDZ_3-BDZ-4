@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Header } from './components/Header/Header';
+import { Header } from './components/Header/HeaderIcons/HeaderIcons';
 import { Footer } from './components/Footer/Footer';
 import { CardList } from './components/CardList/CardList.jsx';
 import { api, editLikeCard } from './utils/api';
-import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
-import PageProduct from './pages/PageProduct/PageProduct';
-import NotFoundPage from './pages/404/404';
-import { Route, Routes } from 'react-router-dom';
-import FavoritePage from './pages/FavoritePage/FavoritePage';
-import RouterAuth from './route/RouterAuth/RouterAuth';
-import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
+// import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
+// import PageProduct from './pages/PageProduct/PageProduct';
+// import NotFoundPage from './pages/NotFound';
+// import { Route, Routes } from 'react-router-dom';
+// import FavoritePage from './pages/FavoritePage/FavoritePage';
+// import RouterAuth from './route/RouterAuth/RouterAuth';
+// import NotFoundProductPage from './NotFound/NotFound.jsx';
 
 function App() {
     const [card, setCards] = useState([]);
