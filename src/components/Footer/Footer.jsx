@@ -3,17 +3,17 @@ import './footer.css';
 import Logo from '../Logo/Logo';
 
 const links = [
-    { name: 'Каталог', src: '/' },
-    { name: 'Акции', src: '/' },
-    { name: 'Новости', src: '/' },
-    { name: 'Отзывы', src: '/' },
+    { name: 'Каталог', href: '/' },
+    { name: 'Акции', href: '/' },
+    { name: 'Новости', href: '/' },
+    { name: 'Отзывы', href: '/' },
 ];
 
 const linksTwo = [
-    { name: 'Оплата и доставка', src: '/' },
-    { name: 'Часто спрашивают', src: '/' },
-    { name: 'Обратная связь', src: '/' },
-    { name: 'Контакты', src: '/' },
+    { name: 'Оплата и доставка', href: '/' },
+    { name: 'Часто спрашивают', href: '/' },
+    { name: 'Обратная связь', href: '/' },
+    { name: 'Контакты', href: '/' },
 ];
 
 export const Footer = () => {
@@ -25,7 +25,7 @@ export const Footer = () => {
                         <div className="footer__copy">
                             <Logo />
                             <span>
-                                © «Интернет-магазин DogFood.ru»{' '}
+                                © «Интернет-магазин BlackParrot.ru»{' '}
                                 {new Date().getFullYear()}
                             </span>
                         </div>
@@ -49,7 +49,7 @@ export const Footer = () => {
                                             key={el.name}
                                             className="footer__item"
                                         >
-                                            <a href={el.src}>{el.name}</a>
+                                            <a href={el.href}>{el.name}</a>
                                         </li>
                                     );
                                 })}
@@ -60,23 +60,23 @@ export const Footer = () => {
                                 </li>
                                 <li className="footer__item">
                                     <h3>8 (999) 00-00-00</h3>
-                                    <span>dogfood.ru@gmail.com</span>
+                                    <span>blackparrot.ru@gmail.com</span>
                                 </li>
                                 <ul className="icon__wrapper">
                                     <li className="icon telegram-icon">
-                                        <a href="#"></a>
+                                        <a href="/"></a>
                                     </li>
                                     <li className="icon whatsapp-icon">
-                                        <a href="#"></a>
+                                        <a href="/"></a>
                                     </li>
                                     <li className="icon viber-icon">
-                                        <a href="#"></a>
+                                        <a href="/"></a>
                                     </li>
                                     <li className="icon instagram-icon">
-                                        <a href="#"></a>
+                                        <a href="/"></a>
                                     </li>
                                     <li className="icon vk-icon">
-                                        <a href="#"></a>
+                                        <a href="/"></a>
                                     </li>
                                 </ul>
                             </ul>
