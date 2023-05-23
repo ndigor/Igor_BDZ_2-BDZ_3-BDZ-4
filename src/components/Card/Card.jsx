@@ -1,14 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './card.css';
 import { ReactComponent as Like } from './img/Like.svg';
 import { Link } from 'react-router-dom';
-import { CardContext } from '../../context/cardContext';
-import ProductPrice from '../ProductPrice/ProductPrice';
 
-const Card = ({ product }) => {
-    const { user, changeLikeCard } = useContext(CardContext);
+const Card = ({ product, userId, changeLikeCard }) => {
+    const cardLiked = product.likes.some((item) => item === userId);
 
-    const cardLiked = product.likes.some((item) => item === user._id);
+    // console.log(product.likes);
+    const changeLike = () => {
+        // return !cardLiked
+        //     ? api.addLike(product._id)
+        //     : api.removeLike(product._id);
+        changeLikeCard(product._id, cardLiked);
+        // return editLikeCard(product._id, cardLiked);
+    };
 
     return (
         <div className="card">
@@ -24,9 +29,7 @@ const Card = ({ product }) => {
             </div>
             <div className="card__sticky card__sticky_right">
                 <button
-                    onClick={() => {
-                        changeLikeCard(product._id, cardLiked);
-                    }}
+                    onClick={changeLike}
                     className={`btn__like ${
                         cardLiked ? 'card__like_active' : 'card__like'
                     }`}
@@ -43,7 +46,7 @@ const Card = ({ product }) => {
                     />
                 </div>
                 <div className="card__description">
-                    <ProductPrice productInfo={product} />
+                    <span className="card__price">{product.price} ₽</span>
                     <span className="card__weight">{product.wight}</span>
                     <p className="card__text">{product.name}</p>
                 </div>
