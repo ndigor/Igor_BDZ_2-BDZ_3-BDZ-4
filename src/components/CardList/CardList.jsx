@@ -1,5 +1,5 @@
 import React from 'react';
-import './cardList.css';
+import './CardList.css';
 import Card from '../Card/Card';
 
 export const CardList = ({ cards, userId, changeLikeCard }) => {
