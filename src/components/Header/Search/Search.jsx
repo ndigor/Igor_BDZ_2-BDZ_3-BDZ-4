@@ -3,13 +3,13 @@ import './search.css';
 
 const Search = ({ setSearch }) => {
     return (
-        <div class="search">
+        <div className="search">
             <input
                 className="search__input"
                 placeholder="Поиск..."
                 onChange={(e) => setSearch(e.target.value)}
             />
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
         </div>
     );
 };

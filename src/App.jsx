@@ -5,23 +5,24 @@ import { Footer } from './components/Footer/Footer';
 import { api, editLikeCard } from './utils/api';
 import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
 import PageProduct from './pages/PageProduct/PageProduct';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import {NotFoundPage} from './pages/NotFoundPage/NotFoundPage';
 import { Route, Routes } from 'react-router-dom';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
-import RouterAuth from './route/RouterAuth/RouterAuth';
+import {RouterAuth} from './route/RouterAuth';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
+import { CardContext } from './context/cardContext';
 
 function App() {
     const localStorage = window.localStorage;
     const localStorageCards = JSON.parse(localStorage.getItem('card'));
-    const [card, setCards] = useState([]);
+    const [cards, setCards] = useState([]);
     const [search, setSearch] = useState(undefined);
     const [user, setUser] = useState({});
     const [isAuth, setAuth] = useState(true);
 
     const myCards = (card) => {
         return card.filter(
-            (item) => item.author._id === '643fb8243291d790b3f3b309'
+            (item) => item.author._id === '622bd81b06c7d323b8ae4614'
         );
     };
 
@@ -30,7 +31,7 @@ function App() {
             (error) => console.log(error)
         );
 
-        const newCard = card.map((item) =>
+        const newCard = cards.map((item) =>
             item._id === updateLikeInCard._id ? updateLikeInCard : item
         );
         setCards([...newCard]);
@@ -109,9 +110,14 @@ function App() {
         }
     };
 
+    const ProjectValue={
+        cards, user, changeLikeCard, search, onSort
+    }
+
     return (
         <div className="App">
             <Header setSearch={setSearch}></Header>
+            <CardContext.Provider value={ProjectValue}>
             <main className="main">
                 {/* <button onClick={() => setAuth(!isAuth)}>Click me now!</button> */}
                 <div className="container">
@@ -123,7 +129,7 @@ function App() {
                                     <CatalogProducts
                                         setSearch={setSearch}
                                         search={search}
-                                        cards={card}
+                                        cards={cards}
                                         user={user}
                                         changeLikeCard={changeLikeCard}
                                         onSort={onSort}
@@ -149,10 +155,14 @@ function App() {
                             />
                         </Routes>
                     ) : (
-                        <RouterAuth />
+                        <Routes>
+                            <Route path="/" element={ <RouterAuth/>}></Route>
+                        </Routes>
+                       
                     )}
                 </div>
             </main>
+            </CardContext.Provider>
             <Footer />
         </div>
     );

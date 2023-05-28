@@ -7,17 +7,13 @@ export const CardList = ({ cards, userId, changeLikeCard }) => {
         <div className="cards">
             {cards.map((elem) => {
                 return (
-                    <>
                         <Card
                             key={elem._id}
                             {...elem}
                             product={elem}
                             userId={userId}
-                            changeLikeCard={changeLikeCard}
-                        />
-                    </>
-                );
+                            changeLikeCard={changeLikeCard} />
+                        )
             })}
-        </div>
-    );
-};
+        </div>)
+}

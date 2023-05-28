@@ -4,6 +4,7 @@ import { ReactComponent as Like } from './img/Like.svg';
 import { Link } from 'react-router-dom';
 
 const Card = ({ product, userId, changeLikeCard }) => {
+    
     const cardLiked = product.likes.some((item) => item === userId);
 
     // console.log(product.likes);

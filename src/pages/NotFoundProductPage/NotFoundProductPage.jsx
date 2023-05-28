@@ -1,5 +1,5 @@
 import React from 'react';
-import svg from '../NotFoundPage/svg.svg';
+import svg from './../../components/NotFound/NotFound.svg';
 import './notFoundProductPage.css';
 import { Link, NavLink } from 'react-router-dom';
 
