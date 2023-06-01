@@ -11,6 +11,9 @@ import FavoritePage from './pages/FavoritePage/FavoritePage';
 import {RouterAuth} from './route/RouterAuth';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
 import { CardContext } from './context/cardContext';
+import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
+import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
+import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
 
 function App() {
     const localStorage = window.localStorage;
