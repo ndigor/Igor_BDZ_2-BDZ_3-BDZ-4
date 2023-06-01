@@ -39,6 +39,24 @@ class Api {
             headers: this.headers,
         }).then(onResponse);
     }
+
+    /*Реализация добавления отзыва*/
+    addNewReview(id, body) {
+        return fetch(`${this.baseUrl}/products/review/${id}`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify(body),
+        }).then(onResponse);
+    }
+
+     /*Реализация удаления отзыва*/
+    deleteProductReview(productId, reviewId) {
+        return fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, {
+            method: 'DELETE',
+            headers: this.headers,
+        }).then(onResponse);
+    }
+}
     
     
     /*Добавление установки  лайка на позицию*/
