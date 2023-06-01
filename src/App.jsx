@@ -8,12 +8,14 @@ import PageProduct from './pages/PageProduct/PageProduct';
 import {NotFoundPage} from './pages/NotFoundPage/NotFoundPage';
 import { Route, Routes } from 'react-router-dom';
 import FavoritePage from './pages/FavoritePage/FavoritePage';
-import {RouterAuth} from './route/RouterAuth';
-import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
-import { CardContext } from './context/cardContext';
 import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
 import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
 import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
+import Modal from './components/Modal/Modal';
+import {RouterAuth} from './route/RouterAuth';
+import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
+import { CardContext } from './context/cardContext';
+
 
 function App() {
     const localStorage = window.localStorage;
