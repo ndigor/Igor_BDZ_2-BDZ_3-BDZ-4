@@ -22,7 +22,7 @@ function App() {
 
     const myCards = (card) => {
         return card.filter(
-            (item) => item.author._id === '622bd81b06c7d323b8ae4614'
+            (item) => item.author._id === 'IgorN'
         );
     };
 
