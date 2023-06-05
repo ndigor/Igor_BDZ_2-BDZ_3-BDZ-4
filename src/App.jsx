@@ -15,6 +15,7 @@ import Modal from './components/Modal/Modal';
 import {RouterAuth} from './route/RouterAuth';
 import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
 import { CardContext } from './context/cardContext';
+import FAQ from
 
 
 function App() {
