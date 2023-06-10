@@ -74,7 +74,7 @@ class Api {
    //        headers: this.headers,
    //    }).then(onResponse);
    //  }
-}
+
 
 /*Реализация метода добавления лайка, если позиция не лайкнута, и снятия лайка, если на ней стоит лайк*/
 export const api = new Api(config);
