@@ -1,13 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import '../forms.css';
 import React, { useContext } from 'react';
-import { userApi } from '../../../utils/apiUser';
+import { userApi } from '../../../utils/api';
 import { useForm } from 'react-hook-form';
 import {
     checkingTheFillingEmail,
     checkingTheFillingGroup,
     passwordValidationCheck,
-} from '../../../utils/utils';
+} from './RegistrationForm.jsx';
 import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 import { CardContext } from '../../../context/cardContext';
 
