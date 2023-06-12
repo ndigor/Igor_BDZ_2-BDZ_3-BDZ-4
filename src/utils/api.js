@@ -1,120 +1,114 @@
+const onResponse  = (res) => {
+    return res.ok ? res.json() : Promise.reject('Error')
+} 
+
+class Api {
+  constructor(data) {
+    this.baseUrl = data.baseUrl;
+    this.headers = data.headers;
+  }
+  getProductList(page = 1, limit = 15) {
+    return fetch(`${this.baseUrl}/products?page=${page}&limit=${limit}`, {
+        method: "GET",
+        headers: this.headers,
+    }).then(onResponse);
+  }
+
+  getUserInfo() {
+    return fetch(`${this.baseUrl}/users/me`, {
+        headers: this.headers
+    }).then(onResponse)
+  }
+  searchProducts(path) {
+    return fetch(`${this.baseUrl}/products/search?query=${path}`, {
+        headers: this.headers
+    }).then((e)=>onResponse(e))
+  }
+  addLike(productId) {
+    return fetch(`${this.baseUrl}/products/likes/${productId}`, {
+      headers: this.headers,
+      method: "PUT"
+    }).then(onResponse)
+  }
+  deleteLike(productId) {
+    return fetch(`${this.baseUrl}/products/likes/${productId}`, {
+      headers: this.headers,
+      method: "DELETE"
+    }).then(onResponse)
+  }
+  changeProductLike(productId, isLiked) {
+    return fetch(`${this.baseUrl}/products/likes/${productId}`, {
+      headers: this.headers,
+      method:  isLiked ? "DELETE" : 'PUT'
+    }).then(onResponse)
+  }
+  getProductById(id) {
+    return fetch(`${this.baseUrl}/products/${id}`, {
+      headers: this.headers,
+    }).then(onResponse)
+  }
+
+
+  addProductReview(productId, data) {
+    return fetch(`${this.baseUrl}/products/review/${productId}`, {
+      headers: this.headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(onResponse)
+  }
+  deleteProductReview(productId, reviewId) {
+    return fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, {
+      headers: this.headers,
+      method: "DELETE",
+    }).then(onResponse)
+  }
+
+  signin(data) {
+    return fetch(`${this.baseUrl}/signin`, {
+      headers: this.headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(onResponse)
+  }
+
+  signup(data) {
+    return fetch(`${this.baseUrl}/signup`, {
+      headers: this.headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(onResponse)
+  }
+  resetPass(data) {
+    return fetch(`${this.baseUrl}/forgot-password`, {
+      headers: this.headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(onResponse)
+  }
+  resetPassWithToken(token, data) {
+    return fetch(`${this.baseUrl}/password-reset/${token}`, {
+      headers: this.headers,
+      method: "PATCH",
+      body: JSON.stringify(data)
+    }).then(onResponse)
+  }
+  
+}
+
 const config = {
     baseUrl: 'https://api.react-learning.ru',
     headers: {
-        authorization:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQ2YjE1ZThmYmM0NzNmYTg5Y2U1NzYiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgyMzU4NjE5LCJleHAiOjE3MTM4OTQ2MTl9.79zquAglgG_3kM45B1yt1aDx_WOc1Tm1oIzzQeNmg6o',
-        'Content-Type': 'application/json',
-    },
-};
-
-const onResponse = (data) => {
-    return data.ok ? data.json() : Promise.reject('Что-то пошло не так');
-};
-
-class Api {
-    constructor(data) {
-        this.baseUrl = data.baseUrl;
-        this.headers = data.headers;
-    }
-
-    /*Получение списка всех позиций*/
-    getAllProducts() {
-        return fetch(`${this.baseUrl}/products`, {
-            method: 'GET',
-            headers: this.headers,
-        }).then(onResponse);
-    }
-
-    /*Получение информации о пользователе*/
-    getUserInfo() {
-        return fetch(`${this.baseUrl}/users/me`, {
-            method: 'GET',
-            headers: this.headers,
-        }).then(onResponse);
-    }
-    
-    /*Реализация поиска*/
-    searchProducts(path) {
-        return fetch(`${this.baseUrl}/products/search?query=${path}`, {
-            headers: this.headers,
-        }).then(onResponse);
-    }
-
-    /*Реализация добавления отзыва*/
-    addNewReview(id, body) {
-        return fetch(`${this.baseUrl}/products/review/${id}`, {
-            method: 'POST',
-            headers: this.headers,
-            body: JSON.stringify(body),
-        }).then(onResponse);
-    }
-
-     /*Реализация удаления отзыва*/
-    deleteProductReview(productId, reviewId) {
-        return fetch(`${this.baseUrl}/products/review/${productId}/${reviewId}`, {
-            method: 'DELETE',
-            headers: this.headers,
-        }).then(onResponse);
+        "Content-Type": "application/json",
+        authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQ2YjE1ZThmYmM0NzNmYTg5Y2U1NzYiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgyMzU4NjE5LCJleHAiOjE3MTM4OTQ2MTl9.79zquAglgG_3kM45B1yt1aDx_WOc1Tm1oIzzQeNmg6o'
     }
 }
-    
-    
-    /*Добавление установки  лайка на позицию*/
-    // addLike(id) {
-    //   return fetch(`${this.baseUrl}/products/likes/${id}`, {
-    //       method: 'PUT',
-    //       headers: this.headers,
-    //  }).then(onResponse);
-    //}
-    
-    /*Удаление лайка по ID*/
-   //  removeLike(id) {
-   //     return fetch(`${this.baseUrl}/products/likes/${id}`, {
-   //        method: 'DELETE',
-   //        headers: this.headers,
-   //    }).then(onResponse);
-   //  }
 
-
-/*Реализация метода добавления лайка, если позиция не лайкнута, и снятия лайка, если на ней стоит лайк*/
 export const api = new Api(config);
-export const editLikeCard = (id, cardLiked) => {
-    return fetch(`${config.baseUrl}/products/likes/${id}`, {
-        method: cardLiked ? 'DELETE' : 'PUT',
-        headers: config.headers,
-    }).then(onResponse);
-};
 
-// export const getAllProducts = (id, cardLiked) => {
-//     return fetch(`${config.baseUrl}/products`, {
-//         method: 'GET',
-//         headers: config.headers,
-//     }).then(onResponse);
-// };
-export const getOneProduct = (id) => {
-    return fetch(`${config.baseUrl}/products/${id}`, {
-        method: 'GET',
-        headers: config.headers,
-    }).then(onResponse);
-};
+export const getProductList = () => {
+  return fetch(`${config.baseUrl}/products`, {
+      method: "GET",
+      headers: config.headers,
+  }).then(onResponse);
+}
 
-// export const addReview = (id, reviewId) => {
-//     return fetch(`${config.baseUrl}/products/review/${id}/${reviewId}`, {
-//         method: 'POST',
-//         headers: config.headers,
-//     }).then(onResponse);
-// }
-
-// export const removeReview = (id) => {return fetch(`${config.baseUrl}/products/${id}`, {
-//     method: 'DELETE',
-//     headers: config.headers,
-// }).then(onResponse);}
-
-// export const getAllReview = () => {
-//     return fetch(`${config.baseUrl}/products/review/`, {
-//         method: 'GET',
-//         headers: config.headers,
-//     }).then(onResponse);
-// };
-
-// + GET https://api.react-learning.ru/products/review/:productId

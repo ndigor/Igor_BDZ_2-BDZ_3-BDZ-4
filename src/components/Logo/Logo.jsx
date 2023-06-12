@@ -1,9 +1,14 @@
+
+
 import React from 'react';
-import { ReactComponent as LogoSvg } from './logo.svg';
-import './logo.css';
+import logoDF from './logo.svg';
+import './index.css';
+import { LogoEx } from './logoExample';
 
-const Logo = (props) => {
-    return <LogoSvg className="logo" />;
-};
+export const Logo = () => {
 
-export default Logo;
+    return (<a href="/">
+        <img src={logoDF} alt='logo' className='logo-pic' />
+
+    </a>)
+}

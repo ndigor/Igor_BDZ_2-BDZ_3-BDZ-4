@@ -1,18 +1,13 @@
-import React from 'react';
-// import './search.css';
-import s from './search.module.css';
+import './index.css'
 
-const Search = ({ setSearch }) => {
+export const Search = ({ setSearch }) => {
+
     return (
-        <div class={s.search}>
-            <input
-                className={s.search__input}
-                placeholder="Поиск..."
-                onChange={(e) => setSearch(e.target.value)}
-            />
-            {/* <i class="fas fa-search" className={s.search__icon}></i> */}
-        </div>
-    );
-};
+        <input
 
-export default Search;
+            placeholder="search.."
+            onChange={(e) => setSearch(e.target.value)}
+            className="search__input"
+        />
+    )
+}

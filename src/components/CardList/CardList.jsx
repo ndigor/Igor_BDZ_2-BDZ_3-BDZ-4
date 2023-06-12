@@ -1,19 +1,15 @@
-import React from 'react';
-import './CardList.css';
-import Card from '../Card/Card';
+import React from "react";
+import { Card } from "../Card/Card";
+import "./index.css";
 
-export const CardList = ({ cards, userId, changeLikeCard }) => {
-    return (
-        <div className="cards">
-            {cards.map((elem) => {
-                return (
-                        <Card
-                            key={elem._id}
-                            {...elem}
-                            product={elem}
-                            userId={userId}
-                            changeLikeCard={changeLikeCard} />
-                        )
-            })}
-        </div>)
-}
+export const CardList = ({ cards }) => {
+
+
+  return (
+    <div className="cards">
+      {cards.map((item) => {
+        return <Card key={item.updated_at} {...item} product={item} />;
+      })}
+    </div>
+  );
+};

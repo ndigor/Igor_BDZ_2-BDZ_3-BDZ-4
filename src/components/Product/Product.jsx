@@ -7,7 +7,7 @@ import { CardsContext } from '../../context/cardContext';
 import { getEndings } from '../../utils/utils';
 import { BaseButton } from '../Button/Button';
 import truck from './delivery.svg';
-import { ReactComponent as Like } from '../Card/img/like.svg'
+import { ReactComponent as Like } from '../Card/img/Like.svg'
 import cn from 'classnames';
 import { Rating } from '../Rating/Rating';
 import { Reviews } from '../Reviews/Reviews';

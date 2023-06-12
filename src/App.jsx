@@ -1,176 +1,172 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import { Header } from './components/Header/Header';
-import { Footer } from './components/Footer/Footer';
-import { api, editLikeCard } from './utils/api';
-import CatalogProducts from './pages/CatalogProducts/CatalogProducts';
-import PageProduct from './pages/PageProduct/PageProduct';
-import {NotFoundPage} from './pages/NotFoundPage/NotFoundPage';
-import { Route, Routes } from 'react-router-dom';
-import FavoritePage from './pages/FavoritePage/FavoritePage';
-import RegistrationForm from './components/Forms/RegistrationForm/RegistrationForm';
-import AuthorizationForm from './components/Forms/AuthorizationForm/AuthorizationForm';
-import PasswordRecoveryForm from './components/Forms/PasswordRecoveryForm/PasswordRecoveryForm';
-import Modal from './components/Modal/Modal';
-import {RouterAuth} from './route/RouterAuth';
-import NotFoundProductPage from './pages/NotFoundProductPage/NotFoundProductPage';
-import { CardContext } from './context/cardContext';
+/* eslint-disable no-unused-vars */
+import React, { useCallback, useEffect, useState } from "react";
+import "./App.scss";
+import { Footer } from "./components/Footer/Footer";
+import { Header } from "./components/Header/Header";
+
+import { api } from "./utils/api";
+import { useDebounce } from "./hooks/hooks";
+import { CatalogPage } from "./pages/CatalogPage/CatalogPage";
+import { ProductPage } from "./pages/ProductPage/ProductPage";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { FavoritesPage } from "./pages/FavoritesPage/FavoritesPage";
+import { UserContext } from "./context/userContext";
+import { CardsContext } from "./context/cardContext";
+import { ThemeContext } from "./context/themeContext";
+import { filteredCards, findLiked } from "./utils/utils";
+import { CHEAPEST, EXPENSIVE, NEWEST, POPULAR, RATE, SALE } from "./constants/constants";
+import { AntdPage } from "./pages/AntdPage/AntdPage";
+import { Modal } from "./components/Modal/Modal";
+import { LoginForm } from "./components/Auth/Login/Login";
+import { RegisterForm } from "./components/Auth/Register/Register";
+import { ResetPass } from "./components/Auth/ResetPass/ResetPass";
+import { useDispatch } from "react-redux";
+import { setList } from "./storage/slices/productsSlice";
+import { ProfilePage } from "./pages/ProfilePage/Profile";
 
 
 function App() {
-    const localStorage = window.localStorage;
-    const localStorageCards = JSON.parse(localStorage.getItem('card'));
-    const [cards, setCards] = useState([]);
-    const [search, setSearch] = useState(undefined);
-    const [user, setUser] = useState({});
-    const [isAuth, setAuth] = useState(true);
+  const [cards, setCards] = useState([]);
+  const [search, setSearch] = useState(undefined);
+  const [user, setUser] = React.useState({});
+  const [isAuthorized, setAuth] = useState(true);
+  const [favorites, setFavorites] = useState([]);
+  const [theme, setTheme] = useState(true);
+  const [modalActive, setModalActive] = useState(false);
 
-    const myCards = (card) => {
-        return card.filter(
-            (item) => item.author._id === 'IgorN'
-        );
-    };
+  const dispatch = useDispatch();
 
-    const changeLikeCard = async (product, cardLiked) => {
-        const updateLikeInCard = await editLikeCard(product, cardLiked).catch(
-            (error) => console.log(error)
-        );
+  const debounceValueInApp = useDebounce(search)
 
-        const newCard = cards.map((item) =>
-            item._id === updateLikeInCard._id ? updateLikeInCard : item
-        );
-        setCards([...newCard]);
-        // const deleteUpdatedCard = () => {
-        //     const newCard = card.map((item) =>
-        //         item._id === updateLikeInCard._id ? updateLikeInCard : item
-        //     );
-        //     setCards([...newCard]);
-        // };
+  const handleProductLike = useCallback(async (product, wasLiked) => {
+    const updatedCard = await api.changeProductLike(product._id, wasLiked);
+    setCards(s => [...s.map(e => e._id === updatedCard?._id ? updatedCard : e)]);
 
-        // const addUpdatedCard = () => {
-        //     const newCard = card.map((item) =>
-        //         item._id === updateLikeInCard._id ? updateLikeInCard : item
-        //     );
-        //     setCards([...newCard]);
-        // };
-        // cardLiked ? deleteUpdatedCard() : addUpdatedCard();
-    };
+    wasLiked ?
+      // setFavorites/ delete
+      setFavorites((state) => state.filter(f => f._id !== updatedCard._id))
+      :
+      // setFavorites/ add
+      setFavorites((state) => [updatedCard, ...state])
 
-    useEffect(() => {
-        if (search === undefined) return;
-        api.searchProducts(search)
-            .then((data) => setCards(myCards(data)))
-            .catch((error) => console.log(error));
-    }, [search]);
+    return wasLiked;
+  }, [])
 
-    useEffect(() => {
-        api.getAllProducts()
-            .then((res) => {
-                setCards(myCards(res.products));
-                localStorage.setItem(
-                    'card',
-                    JSON.stringify(myCards(res.products))
-                );
-            })
-            .catch((error) => console.log(error));
-        api.getUserInfo()
-            .then((data) => setUser(data))
-            .catch((error) => console.log(error));
-    }, []);
-
-    const onSort = (sortId) => {
-        if (sortId === 'all') {
-            const newCard = localStorageCards.map((elem) => elem);
-            setCards([...newCard]);
-        }
-        if (sortId === 'lowPrice') {
-            const newCards = localStorageCards.sort(
-                (a, b) => a.price - b.price
-            );
-            setCards([...newCards]);
-        }
-        if (sortId === 'highPrice') {
-            const newCards = localStorageCards.sort(
-                (a, b) => b.price - a.price
-            );
-            setCards([...newCards]);
-        }
-        if (sortId === 'sale') {
-            const newCards = localStorageCards
-                .filter((a) => a.discount)
-                .sort((a, b) => a.discount - b.discount);
-            setCards([...newCards]);
-        }
-        if (sortId === 'new') {
-            const newCards = localStorageCards.filter((a) =>
-                a.tags.includes('new')
-            );
-            setCards([...newCards]);
-        }
-        if (sortId === 'popular') {
-            const newCards = localStorageCards
-                .filter((a) => a.likes)
-                .sort((a, b) => b.likes.length - a.likes.length);
-            setCards([...newCards]);
-        }
-    };
-
-    const ProjectValue={
-        cards, user, changeLikeCard, search, onSort
+  const productRating = (reviews) => {
+    if (!reviews || !reviews.length) {
+      return 0;
     }
+    const res = reviews.reduce((acc, el) => acc += el.rating, 0);
+    return res / reviews.length
+  }
 
-    return (
-        <div className="App">
-            <Header setSearch={setSearch}></Header>
-            <CardContext.Provider value={ProjectValue}>
-            <main className="main">
-                {/* <button onClick={() => setAuth(!isAuth)}>Click me now!</button> */}
-                <div className="container">
-                    {isAuth ? (
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={
-                                    <CatalogProducts
-                                        setSearch={setSearch}
-                                        search={search}
-                                        cards={cards}
-                                        user={user}
-                                        changeLikeCard={changeLikeCard}
-                                        onSort={onSort}
-                                    />
-                                }
-                            />
-                            <Route
-                                path="/product/:id"
-                                element={<PageProduct />}
-                            />
-                            <Route
-                                path="/favorite"
-                                element={<FavoritePage />}
-                            />
-                            <Route path="*" element={<NotFoundPage />} />
-                            <Route
-                                path="/notfoundProduct"
-                                element={
-                                    <NotFoundProductPage
-                                        setSearch={setSearch}
-                                    />
-                                }
-                            />
-                        </Routes>
-                    ) : (
-                        <Routes>
-                            <Route path="/" element={ <RouterAuth/>}></Route>
-                        </Routes>
-                       
-                    )}
-                </div>
+  const onSort = (sortId) => {
+    switch (sortId) {
+      case CHEAPEST:
+        return setCards((state) => [...state.sort((a, b) => a.price - b.price)])
+      case EXPENSIVE:
+        return setCards((state) => [...state.sort((a, b) => b.price - a.price)])
+      case POPULAR:
+        return setCards((state) => [...state.sort((a, b) => b.likes.length - a.likes.length)])
+      case NEWEST:
+        return setCards((state) => [...state.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))])
+      case SALE:
+        return setCards((state) => [...state.sort((a, b) => b.discount - a.discount)])
+      case RATE:
+        return setCards((state) => [...state.sort((a, b) => productRating(b.reviews) - productRating(a.reviews))])
+      default:
+        return setCards((state) => [...state.sort((a, b) => a.price - b.price)])
+    }
+  }
+
+  useEffect(() => {
+    if (debounceValueInApp === undefined) { return; }
+    api.searchProducts(debounceValueInApp)
+      .then((data) => setCards(filteredCards(data)))
+  }, [debounceValueInApp]);
+
+
+
+  useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getProductList()]).then(([userData, data]) => {
+      setUser(userData);
+      const filtered = filteredCards(data.products);
+      dispatch(setList(filtered));
+      setCards(filtered);
+      const fav = filtered.filter(e => findLiked(e, userData._id));
+      // const fav = filtered.filter(e => e.likes.some(el => el === userData._id));
+      setFavorites(fav);
+    });
+  }, [dispatch]);
+
+  const cardsValue = {
+    handleLike: handleProductLike,
+    cards: cards,
+    search,
+    favorites,
+    onSort,
+    setModalActive,
+    productRating,
+    user
+  }
+
+  const authRoutes = <>
+    <Route path="/register" element={
+      <Modal modalActive={modalActive} setModalActive={setModalActive} >
+        <RegisterForm />
+      </Modal>
+    } />
+    <Route path="/login" element={
+      <Modal modalActive={modalActive} setModalActive={setModalActive} >
+        <LoginForm />
+      </Modal>
+    } />
+    <Route path="/reset-pass" element={
+      <Modal modalActive={modalActive} setModalActive={setModalActive} >
+        <ResetPass />
+      </Modal>
+    } />
+  </>
+
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setAuth(true);
+    }
+  }, []);
+
+
+  return (
+
+    <div className={`app__${theme ? "light" : "dark"} inner-example`}>
+      <ThemeContext.Provider value={theme}>
+        <CardsContext.Provider value={cardsValue}>
+          <UserContext.Provider value={user}>
+            <Header setSearch={setSearch} favorites={favorites}>
+            </Header>
+            <main className="container content ">
+              {isAuthorized ?
+                <Routes>
+                  <Route path="/" element={<CatalogPage />} />
+                  <Route path="/favorites" element={<FavoritesPage />} />
+                  <Route path="/product/:id" element={<ProductPage />} >
+                  </Route>
+                  <Route path="/profile" element={<ProfilePage />} />
+                  {authRoutes}
+                  <Route path="/stylebook" element={<AntdPage />} />
+                  <Route path="*" element={<div>NOT FOUND 404</div>} />
+                </Routes>
+                :
+                <Navigate to={"/not-found"} />
+              }
             </main>
-            </CardContext.Provider>
             <Footer />
-        </div>
-    );
+          </UserContext.Provider>
+        </CardsContext.Provider>
+      </ThemeContext.Provider>
+    </div>
+  );
 }
+
 
 export default App;

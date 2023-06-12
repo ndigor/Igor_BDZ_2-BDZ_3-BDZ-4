@@ -1,60 +1,53 @@
-import React from 'react';
-import './card.css';
-import { ReactComponent as Like } from './img/Like.svg';
-import { Link } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
 
-const Card = ({ product, userId, changeLikeCard }) => {
+import React, { useContext } from 'react';
+import './index.scss';
+
+import { ReactComponent as Like } from './img/Like.svg'
+import { api } from '../../utils/api';
+import { Link, NavLink } from 'react-router-dom';
+import { UserContext } from '../../context/userContext';
+import { CardsContext } from '../../context/cardContext';
+import { ThemeContext } from '../../context/themeContext';
+
+
+export const Card = ({ name, price, wight, pictures, image, gender, likes, discount, product, ...args }) => {
+    const user = useContext(UserContext);
+    const {handleLike} = useContext(CardsContext);
     
-    const cardLiked = product.likes.some((item) => item === userId);
+    const handleClick = () => {
+        handleLike(product, isLiked);
+    }
 
-    // console.log(product.likes);
-    const changeLike = () => {
-        // return !cardLiked
-        //     ? api.addLike(product._id)
-        //     : api.removeLike(product._id);
-        changeLikeCard(product._id, cardLiked);
-        // return editLikeCard(product._id, cardLiked);
-    };
+    const theme = useContext(ThemeContext)
 
+
+    const isLiked = likes.some(e => e === user._id);
     return (
-        <div className="card">
-            <div className="card__sticky card__sticky_left">
-                {product.discount ? (
-                    <span className="card__discount">-{product.discount}%</span>
-                ) : (
-                    ''
-                )}
-                {product.tags.map((item) => (
-                    <span className={`tag tag_type_${item}`}>{item}</span>
-                ))}
+        <div className={` card card__${theme ? 'light' : 'dark'} `}>
+            <div className='card__sticky card__sticky_type_top-left'>
+                {!!discount && <span className='card__discount'>
+                    -{discount}%
+                </span>}
+                {args.tags.map(e => <span className={`tag tag_type_${e}`} key={e}>{e}</span>)}
             </div>
-            <div className="card__sticky card__sticky_right">
-                <button
-                    onClick={changeLike}
-                    className={`btn__like ${
-                        cardLiked ? 'card__like_active' : 'card__like'
-                    }`}
-                >
+            <div className='card__sticky card__sticky_type_top-right'>
+
+                <button onClick={handleClick} className={`card__favorite ${isLiked ? 'card__favorite_active' : ''}`}>
                     <Like />
                 </button>
-            </div>
-            <Link to={`/product/${product._id}`} className="card__link">
-                <div className="card__image_wrapper">
-                    <img
-                        className="card__image"
-                        src={product.pictures}
-                        alt="food"
-                    />
-                </div>
-                <div className="card__description">
-                    <span className="card__price">{product.price} ₽</span>
-                    <span className="card__weight">{product.wight}</span>
-                    <p className="card__text">{product.name}</p>
-                </div>
-            </Link>
-            <button className="card__btn btn_color">В Корзину</button>
-        </div>
-    );
-};
 
-export default Card;
+            </div>
+            <Link to={`/product/${product._id}`} className='card__link'>
+                <img src={pictures ?? image} alt="food" className='card__image' />
+                <div className='card__desc'>
+                    <span className='card__price'>{price}p</span>
+                    <span className='card__weight'>{wight}</span>
+                </div>
+                <p className='card__name'>{name}</p>
+            </Link>
+            {/* <NavLink  ></NavLink> */}
+            <span className='card__card btn btn_type_primary'>В Корзину</span>
+        </div>
+    )
+}
